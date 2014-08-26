@@ -34,3 +34,7 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+dayz_server/init/AH.sqf
+dayz_server/init/AHconfig.sqf
+dayz_server/init/AHconfig.sqf
