@@ -26,7 +26,7 @@ _show_name				= true;				// Add the crashname to the marker
 /* do not change below values if you do not know what you are doing */
 _plane					= false;
 _spawnMarker 			= "center";
-_heliModel				= ["UH1Y_DZE","UH1H_DZE","Mi17_DZ","UH60M_EP1","UH1H_TK_EP1","UralWreck","UH60M_EP1","UH1H_TK_EP1","UH60M_MEV_EP1","Ka52Black","Mi24_D","AH1Z"] call BIS_fnc_selectRandom;
+_heliModel				= ["UH1Y_DZE","UH1H_DZE","Mi17_DZ","UH60M_EP1","UH1H_TK_EP1","UH60M_EP1","UH1H_TK_EP1","UH60M_MEV_EP1","Ka52Black","Mi24_D","AH1Z"] call BIS_fnc_selectRandom;
 _crashModel				= "UH1Wreck_DZ";
 _spawnRadius			= HeliCrashArea;
 _heliStart				= [[1000.0,2.0],[3500.0,2.0],[5000.0,2.0],[7500.0,2.0],[9712.0,663.067],[12304.0,1175.07],[14736.0,2500.0],[16240.0,5000.0],[16240.0,7500.0],[16240.0,10000.0]] call BIS_fnc_selectRandom;
