@@ -28,21 +28,25 @@ if (_groupIsEmpty) then {
 		} else {
 			_trigger setVariable ["permadelete",true];	//deny respawn and delete trigger on next despawn.
 		};
-		if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: All units in group %1 killed, spawned 1 dummy AI unit for group.",_unitGroup];};
 	} else {
 		if ((!isNil "DZAI_debugMarkersEnabled") && {DZAI_debugMarkersEnabled}) then {deleteMarker str(_trigger)};
-		{
-			//deleteGroup _x
-			_x call DZAI_deleteGroup;
-		} forEach (_trigger getVariable ["GroupArray",[]]);
-		deleteMarker (_trigger getVariable ["spawnmarker",""]);
-		_trigger call DZAI_updStaticSpawnCount;
-		if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Deleting custom-defined AI spawn %1 at %2.",triggerText _trigger, mapGridPosition _trigger];};
-		deleteVehicle _trigger;
+		_nul = _trigger spawn {
+			_trigger = _this;
+			_trigger setTriggerStatements ["this","true","false"]; //Disable trigger from activating or deactivating while cleanup is performed
+			if (DZAI_debugLevel > 0) then {diag_log format["DZAI Debug: Deleting custom-defined AI spawn %1 at %2 in 30 seconds.",triggerText _trigger, mapGridPosition _trigger];};
+			uiSleep 30;
+			{
+				//_x call DZAI_deleteGroup;
+				_x setVariable ["GroupSize",-1];
+			} forEach (_trigger getVariable ["GroupArray",[]]);
+			deleteMarker (_trigger getVariable ["spawnmarker",""]);
+			_trigger call DZAI_updStaticSpawnCount;
+			deleteVehicle _trigger;
+		};
 	};
 } else {
 	if (!(_trigger getVariable ["respawn",true])) then {
-		_maxUnits = _trigger getVariable ["maxUnits",[0,0]];
+		_maxUnits = _trigger getVariable ["maxUnits",[0,0]]; //Reduce maximum AI for spawn trigger for each AI killed for non-respawning spawns.
 		_maxUnits set [0,(_maxUnits select 0) - 1];
 		if (DZAI_debugLevel > 1) then {diag_log format["DZAI Extended Debug: MaxUnits variable for group %1 set to %2.",_unitGroup,_maxUnits];};
 	};

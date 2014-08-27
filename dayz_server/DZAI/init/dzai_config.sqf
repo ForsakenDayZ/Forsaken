@@ -24,11 +24,11 @@ DZAI_verifyTables = true;
 
 //Enable to have server spawn in objects/buildings normally spawned clientside by DayZ's CfgTownGenerator. Prevents AI from walking/shooting through clutter and other objects. (Default: true)	
 //If running DayZ Mod ("vanilla DayZ") or DayZ Overwatch, it is highly recommended to enable this option, as many added buildings are handled by the CfgTownGenerator. Not used with Epoch.							
-DZAI_objPatch = false;
+DZAI_objPatch = true;
 
-//Minimum seconds to pass until each dead AI body or destroyed vehicle can be cleaned up by DZAI's task scheduler. DZAI will not clean up a body/vehicle if there is a player close by (Default: 600).	
+//Minimum seconds to pass until each dead AI body or destroyed vehicle can be cleaned up by DZAI's task scheduler. DZAI will not clean up a body/vehicle if there is a player close by (Default: 900).	
 //Note: Other cleanup scripts might interfere by cleaning up dead AI bodies/vehicles!									
-DZAI_cleanupDelay = 600;									
+DZAI_cleanupDelay = 900;									
 
 
 /*
@@ -95,10 +95,10 @@ DZAI_lastManStanding = true;
 //Enable to use client-side radio addon for radio messages instead of remote execution method. (Default: false)
 DZAI_clientRadio = false;
 
-//Enable or disable AI hostility to zombies. If enabled, AI will attack zombies. (Default: false)
+//Enable or disable AI hostility to zombies. If enabled, AI units spawned by DZAI will attack nearby zombies. (Default: false)
 DZAI_zombieEnemy = true;	
 
-//Maximum distance for AI group leader to detect zombies. Increasing range beyond default may impact server performance. (Default: 150)							
+//Maximum distance (in meters) for AI group leader to detect zombies. Increasing range beyond default may negatively impact server performance. (Default: 150)							
 DZAI_zDetectRange = 50;									
 
 
@@ -109,17 +109,17 @@ DZAI_zDetectRange = 50;
 DZAI_staticAI = false;
 
 //Set minimum and maximum wait time in seconds to respawn an AI group after all units have been killed. Applies to both static AI and custom spawned AI (Default: Min 300, Max 600).									
-DZAI_respawnTimeMin = 600;
-DZAI_respawnTimeMax = 1200;
+DZAI_respawnTimeMin = 300;
+DZAI_respawnTimeMax = 600;
 
 //Time to allow spawned AI units to exist in seconds before being despawned when no players are present in a trigger area. Applies to both static AI and custom spawned AI (Default: 120)										
-DZAI_despawnWait = 60;										
+DZAI_despawnWait = 120;										
 
 //Respawn limits. Set to -1 for unlimited respawns. (Default: -1 for each).
-DZAI_respawnLimit0 = 1; //Respawn limit for low level AI found in low-value areas (Default: -1)
-DZAI_respawnLimit1 = 1; //Respawn limit for mid level AI found in cities and other mid-value areas (Default: -1)
-DZAI_respawnLimit2 = 1; //Respawn limit for high level AI found in places with military loot (Default: -1)
-DZAI_respawnLimit3 = 1; //Respawn limit for very high level AI in places with high-grade military loot (Default: -1)
+DZAI_respawnLimit0 = -1; //Respawn limit for low level AI found in low-value areas (Default: -1)
+DZAI_respawnLimit1 = -1; //Respawn limit for mid level AI found in cities and other mid-value areas (Default: -1)
+DZAI_respawnLimit2 = -1; //Respawn limit for high level AI found in places with military loot (Default: -1)
+DZAI_respawnLimit3 = -1; //Respawn limit for very high level AI in places with high-grade military loot (Default: -1)
 
 
 /*	Dynamic AI Spawning Settings
@@ -148,7 +148,7 @@ DZAI_dynAreaBlacklist = [];
 DZAI_dynDespawnWait = 120;
 
 //Enable or disable dynamic spawn-free zones of 600m radius around player spawn areas. (Default: false)
-DZAI_freshSpawnSafeArea = true;
+DZAI_freshSpawnSafeArea = false;
 
 
 /*	AI Air vehicle patrol settings. These AI vehicles will randomly travel between different cities and towns.
@@ -189,24 +189,29 @@ DZAI_airWeapons = [
 DZAI_maxLandPatrols = 3;
 
 //Set minimum and maximum wait time in seconds to respawn an AI vehicle patrol after vehicle is destroyed or disabled. (Default: Min 600, Max 900).
-DZAI_respawnTMinL = 60;
-DZAI_respawnTMaxL = 120;
+DZAI_respawnTMinL = 600;
+DZAI_respawnTMaxL = 900;
 
 //Classnames of land vehicle types to use, with the maximum amount of each type to spawn. Default: [["UAZ_Unarmed_TK_EP1",1]]
 DZAI_vehList = [["UAZ_MG_INS",1],["Offroad_DSHKM_Ins",1],["Pickup_PK_INS",1],["BMP2_HQ_INS",1],["BRDM2_INS",1],["UralOpen_INS",1],["Ural_INS",1],["BTR40_MG_TK_INS_EP1",1],["BTR40_TK_INS_EP1",1],["Ikarus_TK_CIV_EP1",1]];
-
-
-
 
 
 //Difficulty level of land vehicle patrol units. Difficulty level also affects unit loadout and loot. Possible values: 0 to 3 (Default: 3)
 DZAI_vehUnitLevel = 3;
 
 //Maximum number of gunner units per land vehicle. Limited by actual number of available gunner positions. (Default: 1)
-DZAI_vehGunnerUnits = 3;
+DZAI_vehGunnerUnits = 2;
 
 //Maximum number of cargo units per land vehicle. Limited by actual number of available cargo positions. (Default: 3)
-DZAI_vehCargoUnits = 24;
+DZAI_vehCargoUnits = 20;
+
+
+/*	AI Vehicle (Air & Land) Settings
+--------------------------------------------------------------------------------------------------------------------*/
+
+//Array of area blacklist markers. Areas covered by marker will not be used as waypoints for vehicle patrols. (Example: ["BlacklistArea1","BlacklistArea2","BlacklistArea3"])
+//Note: Vehicles may still pass through these areas but will not make stops unless enemies are encountered.
+DZAI_waypointBlacklist = [];
 
 
 /*	AI weapon selection settings
@@ -3643,7 +3648,6 @@ DZAI_Rifles3 = ["Winchester1866"
 ,"ukf_lmg_fgrip_FDZ"
 ,"ukf_lmg_SUSAT_FDZ"
 ,"ukf_lmg_SUSAT_fgrip_FDZ"]; //Weapongrade 3 rifles
-
 	
 /*
 	Custom rifle tables can be defined below this line (DZAI_Rifles4 - DZAI_Rifles9) for the corresponding custom weapongrade level using the same format above. 
