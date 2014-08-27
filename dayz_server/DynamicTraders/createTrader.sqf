@@ -14,3 +14,4 @@ _trader setBehaviour 'CARELESS';
 _trader forceSpeed 0;
 _trader enableSimulation false;
 _trader setDir (_this select 2);
+_trader setCaptive true;
