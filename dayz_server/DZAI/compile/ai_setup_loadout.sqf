@@ -56,8 +56,7 @@ if (DZAI_tempNVGs) then {
 
 _unit setVariable ["loadoutDone",true];
 _unit setVariable ["loadout",[[_weapon],[_magazine]]];
-_cash = round(random 100) * 100; // number between 0 and 20 000
-_unit setVariable["CashMoney",_cash ,true];
+
 if (DZAI_debugLevel > 1) then {diag_log format ["DZAI Extended Debug: Created loadout for unit %1 (weapongrade: %2): [%3,%4,%5].",_unit,_weapongrade,_weapon,_magazine,_backpack];};
 
 true

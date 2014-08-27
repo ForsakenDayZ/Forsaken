@@ -64,6 +64,8 @@ for "_i" from 1 to _totalAI do {
 	_unit setVariable ["unithealth",[(DZAI_baseBlood + (random DZAI_bonusBlood)),0,false]];					// Set unit health (blood, legs health, legs broken)
 	_unit setVariable ["unconscious",false];											// Set unit consciousness
 	_unit addEventHandler [DZAI_healthType, DZAI_healthStatements];
+	_cash = round(random 100) * 100; // number between 0 and 20 000
+	_unit setVariable["CashMoney",_cash ,true];
 	0 = [_unit, _weapongrade] call DZAI_setupLoadout;									// Assign unit loadout
 	0 = [_unit, _weapongrade] call DZAI_setSkills;										// Set AI skill
 	if (DZAI_weaponNoise) then {_unit addEventHandler ["Fired", {_this call DZAI_aiFired;}];}; // Unit firing causes zombie aggro in the area, like player.
