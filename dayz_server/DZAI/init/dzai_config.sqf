@@ -186,14 +186,14 @@ DZAI_airWeapons = [
 --------------------------------------------------------------------------------------------------------------------*/	
 
 //Global maximum number of active AI land vehicle patrols. Set at 0 to disable (Default: 0).	
-DZAI_maxLandPatrols = 3;
+DZAI_maxLandPatrols = 2;
 
 //Set minimum and maximum wait time in seconds to respawn an AI vehicle patrol after vehicle is destroyed or disabled. (Default: Min 600, Max 900).
 DZAI_respawnTMinL = 600;
 DZAI_respawnTMaxL = 900;
 
 //Classnames of land vehicle types to use, with the maximum amount of each type to spawn. Default: [["UAZ_Unarmed_TK_EP1",1]]
-DZAI_vehList = [["UAZ_MG_INS",1],["Offroad_DSHKM_Ins",1],["Pickup_PK_INS",1],["BMP2_HQ_INS",1],["BRDM2_INS",1],["UralOpen_INS",1],["Ural_INS",1],["BTR40_MG_TK_INS_EP1",1],["BTR40_TK_INS_EP1",1],["Ikarus_TK_CIV_EP1",1]];
+DZAI_vehList = [["UAZ_MG_INS",1],["Offroad_DSHKM_Ins",1],["Pickup_PK_INS",1],["BMP2_HQ_INS",1],["UralOpen_INS",1],["Ural_INS",1],["Ikarus_TK_CIV_EP1",1]];
 
 
 //Difficulty level of land vehicle patrol units. Difficulty level also affects unit loadout and loot. Possible values: 0 to 3 (Default: 3)
@@ -203,7 +203,7 @@ DZAI_vehUnitLevel = 3;
 DZAI_vehGunnerUnits = 2;
 
 //Maximum number of cargo units per land vehicle. Limited by actual number of available cargo positions. (Default: 3)
-DZAI_vehCargoUnits = 20;
+DZAI_vehCargoUnits = 24;
 
 
 /*	AI Vehicle (Air & Land) Settings
